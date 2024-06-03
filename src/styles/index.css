@@ -1,3 +1,31 @@
-/* 
-    General Styles
-*/
+h4{
+    font-size: 150px;
+    font-family:"Lucida Console","Courier";
+    color: rgba(83, 145, 239, 0.84);
+    }
+    
+    body{
+        margin-top: 200px;
+        background-color:whitesmoke;
+    }
+    
+    .container {
+        font-size: 50px;
+        padding: 0px;
+        display: flex;
+        justify-content: center;
+    }
+    
+    
+    input {
+        font-size: 50px;
+        max-width: 700px;
+        float: left;
+     
+    }
+    
+    button {
+        font-size: 50px;
+        background-color:rgba(0, 0, 0, 0.414);
+        margin-top: 10px;
+    }
