@@ -29,7 +29,7 @@ const TodoList = () => {
   };
 //este los trae posta
   useEffect(() => {
-    getAllUsers();
+  //  getAllUsers();
     getUserVale();
   }, []);
 //elimina los tasks uno por uno 
@@ -79,7 +79,7 @@ const TodoList = () => {
   return (
     <>
       <div className="text-center">
-        <h4>Users List</h4>
+       {/* <h4>Users List</h4> */}
         {userList.map((item) => {
           return (
             <li key={item.id}>
@@ -87,7 +87,7 @@ const TodoList = () => {
             </li>
           );
         })}
-        <h4>todos</h4>
+        <h4>Todo's</h4>
       </div>
       <div className="container d-flex align-items-center">
         <div className="card">
