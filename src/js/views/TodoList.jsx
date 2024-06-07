@@ -5,13 +5,6 @@ const TodoList = () => {
   const [writeTask, setWriteTask] = useState("");
   const [userList, setUserList] = useState([]);
 
-  function addTask(event) {
-    if (event.key === "Enter") {
-      setWriteTask("");
-      addItemsPost(writeTask);
-    }
-  }
-//trae a todos los usuarios 
   const getAllUsers = async () => {
     try {
       let response = await fetch("https://playground.4geeks.com/todo/users");
@@ -27,12 +20,18 @@ const TodoList = () => {
       .then((res) => res.json())
       .then((data) => setTasks(data.todos));
   };
-//este los trae posta
+
   useEffect(() => {
-  //  getAllUsers();
     getUserVale();
   }, []);
-//elimina los tasks uno por uno 
+
+  const addTask = (event) => {
+    if (event.key === "Enter") {
+      setWriteTask("");
+      addItemsPost(writeTask);
+    }
+  };
+
   const deleteItems = (id) => {
     fetch(`https://playground.4geeks.com/todo/todos/${id}`, {
       method: "DELETE",
@@ -58,7 +57,7 @@ const TodoList = () => {
       getUserVale();
     });
   };
-// elimina todos permannetemente como el que elimina los tasks pero este es para todos juntos.
+
   const deleteAllItems = () => {
     tasks.forEach((task) => {
       fetch(`https://playground.4geeks.com/todo/todos/${task.id}`, {
@@ -76,17 +75,20 @@ const TodoList = () => {
     });
   };
 
+  const handleCreateUser = () => {
+    fetch("https://playground.4geeks.com/todo/users/valeRePiola", {
+      method: "POST",
+    }).then(() => {
+      getUserVale();
+    });
+  };
+
   return (
     <>
       <div className="text-center">
-       {/* <h4>Users List</h4> */}
-        {userList.map((item) => {
-          return (
-            <li key={item.id}>
-              {item.name}
-            </li>
-          );
-        })}
+        {userList.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
         <h4>Todo's</h4>
       </div>
       <div className="container d-flex align-items-center">
@@ -95,24 +97,23 @@ const TodoList = () => {
             type="text"
             placeholder="What's needs to be done?"
             value={writeTask}
-            onKeyDown={(event) => addTask(event)}
+            onKeyDown={addTask}
             onChange={(event) => setWriteTask(event.target.value)}
           />
           <ul className="list-group list-group-flush">
-            {tasks?.map((element, i) => {
-              return (
-                <li className="list-group-item d-flex justify-content-between">
-                  {element?.label}
-                  <button
-                    className="btn btn-secondary btn-lg"
-                    onClick={() => deleteItems(element.id)}
-                  >
-                    <i className="fas fa-backspace"></i>
-                  </button>
-                </li>
-              );
-            })}
+            {tasks && tasks.map((element) => (
+              <li key={element.id} className="list-group-item d-flex justify-content-between">
+                {element.label}
+                <button
+                  className="btn btn-secondary btn-lg"
+                  onClick={() => deleteItems(element.id)}
+                >
+                  <i className="fas fa-backspace"></i>
+                </button>
+              </li>
+            ))}
           </ul>
+
         </div>
       </div>
       <div>
@@ -120,10 +121,9 @@ const TodoList = () => {
           <i className="far fa-trash-alt text-white"></i>
         </button>
       </div>
+      <button className="btn btn-danger" onClick={handleCreateUser}>Jose creea el usuario aqui.</button>
     </>
   );
 };
-
-//que dificil se hizo este codigo, seguir practicandolo. 
 
 export default TodoList;
